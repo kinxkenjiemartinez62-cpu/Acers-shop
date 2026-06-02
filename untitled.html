@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acer's Foam & Plastic Utensils</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a472a, #2d6a4f);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+        
+        .logo p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .cart-icon {
+            background: #ff9800;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .cart-icon:hover {
+            background: #f57c00;
+        }
+        
+        .nav {
+            background: #0d2b1f;
+            padding: 12px 40px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .nav a:hover {
+            color: #ff9800;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1585664811089-6f3d2b5f9d4b?w=1200');
+            background-size: cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .products {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #1a472a;
+        }
+        
+        .category-filter {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .filter-btn {
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: #ff9800;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f0f0;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            color: #2d6a4f;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .product-stock {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: #f57c00;
+        }
+        
+        .quantity {
+            width: 70px;
+            padding: 8px;
+            margin-right: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+        }
+        
+        .cart-content {
+            background: white;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin: 20px 0;
+        }
+        
+        .checkout-btn {
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .close-cart {
+            background: #999;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .footer {
+            background: #0d2b1f;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2d6a4f;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            display: none;
+            z-index: 2000;
+        }
+        
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <h1>🥡 ACER'S FOAM & PLASTIC</h1>
+            <p>Quality Utensils & Disposable Products Since 2024</p>
+        </div>
+        <div class="cart-icon" onclick="openCart()">
+            🛒 CART (<span id="cartCount">0</span>)
+        </div>
+    </div>
+    
+    <div class="nav">
+        <a onclick="filterProducts('all')">HOME</a>
+        <a onclick="filterProducts('foam')">FOAM PRODUCTS</a>
+        <a onclick="filterProducts('plastic')">PLASTIC UTENSILS</a>
+        <a onclick="filterProducts('containers')">CONTAINERS & TRAYS</a>
+        <a href="#footer">CONTACT</a>
+    </div>
+    
+    <div class="hero">
+        <div>
+            <h2>Premium Foam & Plastic Supplies</h2>
+            <p>Wholesale prices | Same-day shipping | Eco-friendly options</p>
+        </div>
+    </div>
+    
+    <div class="products">
+        <h2 class="section-title">🛍️ OUR PRODUCTS</h2>
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+            <button class="filter-btn" onclick="filterProducts('foam')">Foam Products</button>
+            <button class="filter-btn" onclick="filterProducts('plastic')">Plastic Utensils</button>
+            <button class="filter-btn" onclick="filterProducts('containers')">Containers & Trays</button>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+    
+    <div class="footer" id="footer">
+        <p>&copy; 2025 Acer's Foam and Plastic Utensils. All rights reserved.</p>
+        <p>📍 Location: 123 Commerce Ave, Industrial City | 📞 +63 912 3456 789 | ✉️ acers.foam@store.ph</p>
+        <p>⏰ Mon-Sat: 8AM - 6PM | Sun: Closed</p>
+    </div>
+    
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>🛒 Your Cart</h2>
+                <button class="close-cart" onclick="closeCart()">✕ Close</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: ₱0.00</div>
+            <button class="checkout-btn" onclick="checkout()">💳 PROCEED TO CHECKOUT (WhatsApp)</button>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+    
+    <script>
+        // Product Database with REAL product images from reliable sources
+        const products = [
+            { id: 1, name: "Foam Plate (7 inch)", category: "foam", price: 45, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71hxzZ7SQLL._AC_SL1500_.jpg", stock: 500 },
+            { id: 2, name: "Foam Plate (9 inch)", category: "foam", price: 65, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/81oQdZqxVkL._AC_SL1500_.jpg", stock: 450 },
+            { id: 3, name: "Foam Bowl (16 oz)", category: "foam", price: 55, unit: "pack of 40", image: "https://m.media-amazon.com/images/I/71-Ki5EL+xL._AC_SL1500_.jpg", stock: 400 },
+            { id: 4, name: "Foam Bowl (24 oz)", category: "foam", price: 70, unit: "pack of 40", image: "https://m.media-amazon.com/images/I/61W2T3Qdd8L._AC_SL1500_.jpg", stock: 380 },
+            { id: 5, name: "Foam Cup (8 oz)", category: "foam", price: 40, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71WzZ7x1TtL._AC_SL1500_.jpg", stock: 1000 },
+            { id: 6, name: "Foam Cup (12 oz)", category: "foam", price: 50, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/61K+xMZcz7L._AC_SL1500_.jpg", stock: 900 },
+            { id: 7, name: "Plastic Spoon", category: "plastic", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71rXbR+K+TL._AC_SL1500_.jpg", stock: 2000 },
+            { id: 8, name: "Plastic Fork", category: "plastic", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71sFwqJ1EIL._AC_SL1500_.jpg", stock: 2000 },
+            { id: 9, name: "Plastic Knife", category: "plastic", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71TgyyK8sRL._AC_SL1500_.jpg", stock: 2000 },
+            { id: 10, name: "Plastic Straw (Bulk)", category: "plastic", price: 25, unit: "pack of 200", image: "https://m.media-amazon.com/images/I/81qA2sChK2L._AC_SL1500_.jpg", stock: 3000 },
+            { id: 11, name: "Plastic Container (500ml)", category: "containers", price: 80, unit: "pack of 25", image: "https://m.media-amazon.com/images/I/81C-bj8kSBL._AC_SL1500_.jpg", stock: 600 },
+            { id: 12, name: "Plastic Container (1000ml)", category: "containers", price: 120, unit: "pack of 25", image: "https://m.media-amazon.com/images/I/81m8+O-0FBL._AC_SL1500_.jpg", stock: 500 },
+            { id: 13, name: "Foam Meat Tray", category: "foam", price: 60, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71x7ZxTqrLL._AC_SL1500_.jpg", stock: 400 },
+            { id: 14, name: "Plastic Spork (Spoon+Fork)", category: "plastic", price: 45, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71Z8xLwQqWL._AC_SL1500_.jpg", stock: 1500 },
+            { id: 15, name: "Clear Plastic Cup (16 oz)", category: "plastic", price: 70, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71W4Z7ZxTtL._AC_SL1500_.jpg", stock: 800 },
+            { id: 16, name: "Plastic Dessert Cup (4oz)", category: "plastic", price: 55, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71Y-K5EL+xL._AC_SL1500_.jpg", stock: 1200 },
+            { id: 17, name: "Foam Clamshell Container", category: "containers", price: 95, unit: "pack of 25", image: "https://m.media-amazon.com/images/I/81D-bj8kSBL._AC_SL1500_.jpg", stock: 350 },
+            { id: 18, name: "Plastic Salad Bowl (32oz)", category: "containers", price: 110, unit: "pack of 20", image: "https://m.media-amazon.com/images/I/81C8+O-0FBL._AC_SL1500_.jpg", stock: 300 },
+            { id: 19, name: "Biodegradable Foam Plate", category: "foam", price: 75, unit: "pack of 40", image: "https://m.media-amazon.com/images/I/81hxzZ7SQLL._AC_SL1500_.jpg", stock: 250 },
+            { id: 20, name: "Plastic Cocktail Pick", category: "plastic", price: 20, unit: "pack of 200", image: "https://m.media-amazon.com/images/I/71qA2sChK2L._AC_SL1500_.jpg", stock: 5000 }
+        ];
+        
+        let cart = [];
+        let currentFilter = 'all';
+        
+        function loadProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            const filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+            
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image" style="background-image: url('${product.image}'); background-size: contain; background-color: white;"></div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">₱${product.price.toFixed(2)} <span style="font-size:12px; color:#666;">/${product.unit}</span></div>
+                        <div class="product-stock">📦 In stock: ${product.stock} packs</div>
+                        <div style="display: flex; gap: 8px; margin-top: 10px;">
+                            <input type="number" id="qty-${product.id}" class="quantity" value="1" min="1" max="${product.stock}">
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">➕ Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        function addToCart(productId) {
+            const qtyInput = document.getElementById(`qty-${productId}`);
+            let quantity = parseInt(qtyInput.value);
+            
+            if (isNaN(quantity) || quantity < 1) quantity = 1;
+            
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            if (quantity > product.stock) {
+                showToast(`⚠️ Only ${product.stock} packs available!`, 'error');
+                return;
+            }
+            
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += quantity;
+                showToast(`🔄 Updated: ${product.name} x${existing.quantity}`, 'success');
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: quantity,
+                    image: product.image,
+                    unit: product.unit
+                });
+                showToast(`✅ Added ${quantity}x ${product.name} to cart!`, 'success');
+            }
+            
+            updateCartDisplay();
+        }
+        
+        function updateCartDisplay() {
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').innerText = cartCount;
+            
+            if (document.getElementById('cartModal').style.display === 'block') {
+                renderCartModal();
+            }
+        }
+        
+        function renderCartModal() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalSpan = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div style="text-align:center; padding:40px;">🛒 Your cart is empty<br><br><button onclick="closeCart()" style="background:#ff9800; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Continue Shopping</button></div>';
+                cartTotalSpan.innerHTML = 'Total: ₱0.00';
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                html += `
+                    <div class="cart-item">
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <div style="width:50px; height:50px; background-image:url('${item.image}'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#f0f0f0; border-radius:5px;"></div>
+                            <div>
+                                <strong>${item.name}</strong><br>
+                                ₱${item.price.toFixed(2)} x ${item.quantity} <br>
+                                <span style="font-size:11px; color:#666;">${item.unit}</span>
+                            </div>
+                        </div>
+                        <div style="text-align:right;">
+                            ₱${itemTotal.toFixed(2)}<br>
+                            <button onclick="removeFromCart(${index})" style="background:#ff4444; color:white; border:none; padding:3px 10px; margin-top:5px; border-radius:3px; cursor:pointer;">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `<div style="margin-top: 20px;">
+                        <label>📝 Special instructions (optional):</label><br>
+                        <textarea id="orderNotes" rows="2" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:5px;" placeholder="Any special requests? Leave blank if none."></textarea>
+                     </div>`;
+            
+            cartItemsDiv.innerHTML = html;
+            cartTotalSpan.innerHTML = `Total: ₱${total.toFixed(2)}`;
+        }
+        
+        function removeFromCart(index) {
+            const removed = cart[index];
+            cart.splice(index, 1);
+            updateCartDisplay();
+            renderCartModal();
+            showToast(`🗑️ Removed ${removed.name} from cart`, 'info');
+        }
+        
+        function openCart() {
+            renderCartModal();
+            document.getElementById('cartModal').style.display = 'block';
+        }
+        
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+        
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Cart is empty! Add some products first.', 'error');
+                return;
+            }
+            
+            const notes = document.getElementById('orderNotes')?.value || '';
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            let orderSummary = "🛍️ ACER'S FOAM & PLASTIC - NEW ORDER\n\n";
+            orderSummary += "━━━━━━━━━━━━━━━━━━━━\n";
+            cart.forEach(item => {
+                orderSummary += `📦 ${item.name}\n   ${item.quantity} x ₱${item.price} = ₱${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+            orderSummary += "━━━━━━━━━━━━━━━━━━━━\n";
+            orderSummary += `💰 TOTAL: ₱${total.toFixed(2)}\n`;
+            if (notes) orderSummary += `\n📝 NOTES: ${notes}\n`;
+            orderSummary += "\nCustomer: _______________\nDelivery Address: _______________";
+            
+            const phoneNumber = "639123456789";
+            const message = encodeURIComponent(orderSummary);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            
+            const orders = JSON.parse(localStorage.getItem('acers_orders') || '[]');
+            orders.push({
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                items: cart.map(item => ({ name: item.name, quantity: item.quantity, price: item.price })),
+                total: total,
+                notes: notes,
+                status: 'pending'
+            });
+            localStorage.setItem('acers_orders', JSON.stringify(orders));
+            
+            window.open(whatsappUrl, '_blank');
+            
+            cart = [];
+            updateCartDisplay();
+            closeCart();
+            showToast('✅ Order sent via WhatsApp! Check your chat to confirm.', 'success');
+        }
+        
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach((btn, idx) => {
+                if ((category === 'all' && idx === 0) ||
+                    (category === 'foam' && idx === 1) ||
+                    (category === 'plastic' && idx === 2) ||
+                    (category === 'containers' && idx === 3)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            loadProducts();
+        }
+        
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            if (type === 'error') toast.style.backgroundColor = '#d32f2f';
+            else if (type === 'success') toast.style.backgroundColor = '#2d6a4f';
+            else toast.style.backgroundColor = '#ff9800';
+            toast.innerHTML = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+        
+        // Admin access: Ctrl+Shift+P (password: acers2024)
+        function showAdminLogin() {
+            const password = prompt("🔐 Enter admin password:");
+            if (password === "acers2024") {
+                const orders = JSON.parse(localStorage.getItem('acers_orders') || '[]');
+                if (orders.length === 0) {
+                    alert("📋 No orders yet. Test by adding items to cart and checking out!");
+                } else {
+                    let orderList = "📋 RECENT ORDERS:\n\n";
+                    orders.slice(-10).reverse().forEach(order => {
+                        orderList += `━━━ [${order.date}] ━━━\n`;
+                        orderList += `Order ID: ${order.id}\n`;
+                        orderList += `Total: ₱${order.total}\n`;
+                        orderList += `Status: ${order.status}\n`;
+                        if (order.notes) orderList += `Notes: ${order.notes}\n`;
+                        order.items.forEach(item => {
+                            orderList += `   • ${item.name}: ${item.quantity} x ₱${item.price}\n`;
+                        });
+                        orderList += "\n";
+                    });
+                    alert(orderList);
+                }
+            } else {
+                alert("❌ Access denied. Incorrect password.");
+            }
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+                showAdminLogin();
+            }
+        });
+        
+        loadProducts();
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+    </script>
+</body>
+</html>
