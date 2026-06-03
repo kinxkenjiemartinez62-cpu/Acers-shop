@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Azer's Foam & Plastic · Admin Edit</title>
+    <title>Azer Foam & Plastics</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,12 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: #f0f2f5;
             color: #333;
         }
 
-        /* Header */
         .header {
-            background: linear-gradient(135deg, #1a472a, #2d6a4f);
+            background: linear-gradient(135deg, #0d2b1f, #1a472a);
             color: white;
             padding: 20px 40px;
             display: flex;
@@ -28,25 +27,49 @@
             flex-wrap: wrap;
         }
 
-        .logo h1 { font-size: 28px; letter-spacing: 2px; }
-        .logo p { font-size: 12px; opacity: 0.8; }
-        .cart-icon {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-icon {
+            font-size: 42px;
+            background: rgba(255,255,255,0.15);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ff9800;
+        }
+        .logo-text h1 { font-size: 28px; letter-spacing: 2px; }
+        .logo-text p { font-size: 11px; opacity: 0.8; letter-spacing: 1px; }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .cart-icon, .user-icon {
             background: #ff9800;
             padding: 10px 20px;
             border-radius: 30px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: bold;
         }
+        .user-icon { background: #2d6a4f; }
         .cart-icon:hover { background: #f57c00; }
+        .user-icon:hover { background: #1a472a; }
 
-        /* Admin Button - Visible but subtle */
         .admin-btn {
             position: fixed;
             top: 15px;
             right: 15px;
             width: 45px;
             height: 45px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(4px);
             cursor: pointer;
             z-index: 999;
@@ -57,19 +80,15 @@
             justify-content: center;
             font-size: 20px;
             color: #ff9800;
-            border: 1px solid rgba(255,152,0,0.5);
-            box-shadow: 0 0 5px rgba(255,152,0,0.3);
+            border: 1px solid rgba(255,152,0,0.6);
             font-weight: bold;
         }
         .admin-btn:hover {
-            background: rgba(255,152,0,0.85);
+            background: #ff9800;
             color: #0a0a0a;
             transform: scale(1.1);
-            border-color: #ff9800;
-            box-shadow: 0 0 12px rgba(255,152,0,0.6);
         }
 
-        /* Navigation */
         .nav {
             background: #0d2b1f;
             padding: 12px 40px;
@@ -83,20 +102,18 @@
         }
         .nav a:hover { color: #ff9800; }
 
-        /* Hero */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1585664811089-6f3d2b5f9d4b?w=1200');
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.pexels.com/photos/7078570/pexels-photo-7078570.jpeg?auto=compress&cs=tinysrgb&w=1200');
             background-size: cover;
-            height: 250px;
+            height: 260px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
         }
-        .hero h2 { font-size: 42px; margin-bottom: 10px; }
+        .hero h2 { font-size: 42px; margin-bottom: 10px; letter-spacing: 2px; }
 
-        /* Products */
         .products {
             padding: 40px;
             max-width: 1400px;
@@ -115,18 +132,17 @@
         }
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: 0.3s;
         }
         .product-card:hover { transform: translateY(-5px); }
         .product-image {
             height: 200px;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-color: #f8f8f8;
+            background-color: #e9ecef;
         }
         .product-info { padding: 15px; }
         .product-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
@@ -138,22 +154,20 @@
             border: none;
             padding: 10px;
             width: 100%;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
         }
         .add-to-cart:hover { background: #f57c00; }
         .quantity {
-            width: 60px;
+            width: 65px;
             padding: 8px;
             margin-right: 10px;
             text-align: center;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 6px;
         }
 
-        /* Footer */
         .footer {
             background: #0d2b1f;
             color: white;
@@ -162,7 +176,6 @@
             margin-top: 40px;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -175,28 +188,50 @@
             z-index: 1001;
         }
 
-        /* Cart Modal */
-        .cart-modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 1500;
             justify-content: center;
             align-items: center;
         }
-        .cart-content {
-            background: #1a1a1a;
+        .modal-content {
+            background: #1e1e2a;
             max-width: 500px;
             width: 90%;
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 30px;
             color: white;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
+        }
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            background: #2a2a35;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 8px;
+        }
+        .modal-content button {
+            background: #ff9800;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .close-modal {
+            background: #666;
+            margin-top: 10px;
         }
         .cart-item {
             display: flex;
@@ -204,31 +239,7 @@
             padding: 10px 0;
             border-bottom: 1px solid #333;
         }
-        .cart-total {
-            font-weight: bold;
-            margin: 15px 0;
-            font-size: 18px;
-        }
-        .checkout-btn {
-            background: #ff9800;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .close-cart {
-            margin-top: 10px;
-            background: #666;
-            padding: 8px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
 
-        /* Admin Modal */
         .admin-modal {
             display: none;
             position: fixed;
@@ -250,7 +261,6 @@
             border: 1px solid #ff9800;
             color: white;
         }
-        .admin-container h2 { color: #ff9800; margin-bottom: 20px; }
         .product-edit-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -261,13 +271,6 @@
             background: #1a1a1a;
             border-radius: 12px;
             padding: 15px;
-            border: 1px solid #333;
-        }
-        .product-edit-card label {
-            display: block;
-            margin: 10px 0 5px;
-            color: #ff9800;
-            font-size: 12px;
         }
         .product-edit-card input, .product-edit-card textarea {
             width: 100%;
@@ -279,80 +282,95 @@
         }
         .save-product-btn {
             background: #2d6a4f;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
             margin-top: 15px;
             width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
         }
         .close-admin {
             background: #ff4444;
-            color: white;
-            border: none;
             padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
             .products { padding: 20px; }
-            .header { flex-direction: column; text-align: center; gap: 10px; }
+            .header { flex-direction: column; text-align: center; gap: 15px; }
             .nav { text-align: center; }
             .hero h2 { font-size: 28px; }
-            .admin-btn { width: 38px; height: 38px; font-size: 16px; top: 10px; right: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Admin Trigger Button (semi-visible) -->
-    <div class="admin-btn" id="adminBtn" title="Admin Panel (password: acers2024)">🔧</div>
+    <div class="admin-btn" id="adminBtn" title="Admin Panel">🔧</div>
 
-    <!-- Store Header -->
     <div class="header">
-        <div class="logo"><h1>🥡 ACER'S FOAM & PLASTIC</h1><p>Quality Utensils & Disposable Products</p></div>
-        <div class="cart-icon" onclick="openCart()">🛒 CART (<span id="cartCount">0</span>)</div>
+        <div class="logo">
+            <div class="logo-icon">🧴</div>
+            <div class="logo-text">
+                <h1>✦ AZER FOAM & PLASTICS ✦</h1>
+                <p>Premium Disposable Solutions | Eco-Conscious Quality</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="user-icon" id="userBtn">👤 ACCOUNT</div>
+            <div class="cart-icon" onclick="openCart()">🛒 CART (<span id="cartCount">0</span>)</div>
+        </div>
     </div>
     <div class="nav">
         <a href="#">HOME</a>
-        <a href="#">FOAM PRODUCTS</a>
+        <a href="#">FOAM</a>
         <a href="#">PLASTIC UTENSILS</a>
         <a href="#">CONTAINERS</a>
         <a href="#">CONTACT</a>
     </div>
     <div class="hero">
-        <div><h2>Premium Foam & Plastic Supplies</h2><p>Wholesale prices | Same-day shipping</p></div>
+        <div><h2>Azer Premium Quality</h2><p>Wholesale prices • Bulk orders welcome • Eco-friendly options</p></div>
     </div>
 
     <div class="products">
-        <h2 class="section-title">🛍️ OUR PRODUCTS</h2>
+        <h2 class="section-title">🔥 BESTSELLERS</h2>
         <div class="product-grid" id="productGrid"></div>
     </div>
 
     <div class="footer">
-        <p>&copy; 2025 Acer's Foam and Plastic Utensils. All rights reserved.</p>
-        <p>📍 123 Commerce Ave | 📞 +63 912 3456 789 | ✉️ acers.foam@store.ph</p>
+        <p>© 2025 Azer Foam & Plastics. Sustainable solutions for modern living.</p>
+        <p>📍 123 Commerce Ave | 📞 +63 912 3456 789 | ✉️ azer@foam.ph</p>
     </div>
 
-    <!-- Cart Modal -->
-    <div id="cartModal" class="cart-modal">
-        <div class="cart-content">
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
             <h3>🛒 Your Cart</h3>
             <div id="cartItemsList"></div>
-            <div id="cartTotalDisplay" class="cart-total">Total: ₱0</div>
-            <button class="checkout-btn" onclick="checkout()">💳 Checkout (WhatsApp)</button>
-            <button class="close-cart" onclick="closeCartModal()">Close</button>
+            <div id="cartTotalDisplay" style="font-weight: bold; margin: 15px 0; font-size: 18px;">Total: ₱0</div>
+            <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+            <button class="close-modal" onclick="closeCartModal()">Close</button>
         </div>
     </div>
 
-    <!-- Admin Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h3 id="userModalTitle">🔐 Account Details</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: #ccc;">Required for order processing</p>
+            <input type="text" id="userName" placeholder="Full Name" autocomplete="off">
+            <input type="tel" id="userPhone" placeholder="Phone Number">
+            <input type="text" id="userAddress" placeholder="Delivery Address">
+            <button id="saveUserBtn">💾 Save Information</button>
+            <button class="close-modal" onclick="closeUserModal()">Close</button>
+        </div>
+    </div>
+
     <div id="adminModal" class="admin-modal">
         <div class="admin-container">
-            <h2>🔧 Product Editor (Permanent Changes)</h2>
-            <p style="margin-bottom:20px;">Edit any product info. Changes save immediately and persist forever in your browser.</p>
+            <h2>🔧 Admin Editor (Global Permanent Changes)</h2>
+            <p style="margin-bottom:20px;">Edit product images, names, prices, stock. Changes visible to ALL visitors.</p>
             <div id="productEditGrid" class="product-edit-grid"></div>
             <button class="close-admin" onclick="closeAdminPanel()">Close Admin Panel</button>
         </div>
@@ -361,43 +379,56 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // ========== DEFAULT PRODUCT DATABASE ==========
+        // ========== PRODUCT DATABASE ==========
         let products = [
-            { id: 1, name: "Foam Plate (7 inch)", price: 45, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71hxzZ7SQLL._AC_SL1500_.jpg", stock: 500 },
-            { id: 2, name: "Foam Plate (9 inch)", price: 65, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/81oQdZqxVkL._AC_SL1500_.jpg", stock: 450 },
-            { id: 3, name: "Foam Bowl (16 oz)", price: 55, unit: "pack of 40", image: "https://m.media-amazon.com/images/I/71-Ki5EL+xL._AC_SL1500_.jpg", stock: 400 },
-            { id: 4, name: "Foam Bowl (24 oz)", price: 70, unit: "pack of 40", image: "https://m.media-amazon.com/images/I/61W2T3Qdd8L._AC_SL1500_.jpg", stock: 380 },
-            { id: 5, name: "Foam Cup (8 oz)", price: 40, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71WzZ7x1TtL._AC_SL1500_.jpg", stock: 1000 },
-            { id: 6, name: "Foam Cup (12 oz)", price: 50, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/61K+xMZcz7L._AC_SL1500_.jpg", stock: 900 },
-            { id: 7, name: "Plastic Spoon", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71rXbR+K+TL._AC_SL1500_.jpg", stock: 2000 },
-            { id: 8, name: "Plastic Fork", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71sFwqJ1EIL._AC_SL1500_.jpg", stock: 2000 },
-            { id: 9, name: "Plastic Knife", price: 35, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71TgyyK8sRL._AC_SL1500_.jpg", stock: 2000 },
-            { id: 10, name: "Plastic Straw (Bulk)", price: 25, unit: "pack of 200", image: "https://m.media-amazon.com/images/I/81qA2sChK2L._AC_SL1500_.jpg", stock: 3000 },
-            { id: 11, name: "Plastic Container (500ml)", price: 80, unit: "pack of 25", image: "https://m.media-amazon.com/images/I/81C-bj8kSBL._AC_SL1500_.jpg", stock: 600 },
-            { id: 12, name: "Plastic Container (1000ml)", price: 120, unit: "pack of 25", image: "https://m.media-amazon.com/images/I/81m8+O-0FBL._AC_SL1500_.jpg", stock: 500 },
-            { id: 13, name: "Foam Meat Tray", price: 60, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71x7ZxTqrLL._AC_SL1500_.jpg", stock: 400 },
-            { id: 14, name: "Plastic Spork", price: 45, unit: "pack of 100", image: "https://m.media-amazon.com/images/I/71Z8xLwQqWL._AC_SL1500_.jpg", stock: 1500 },
-            { id: 15, name: "Clear Plastic Cup (16 oz)", price: 70, unit: "pack of 50", image: "https://m.media-amazon.com/images/I/71W4Z7ZxTtL._AC_SL1500_.jpg", stock: 800 }
+            { id: 1, name: "Foam Plate (7 inch)", price: 45, unit: "pack of 50", image: "https://images.pexels.com/photos/13512373/pexels-photo-13512373.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 500 },
+            { id: 2, name: "Foam Plate (9 inch)", price: 65, unit: "pack of 50", image: "https://images.pexels.com/photos/13512379/pexels-photo-13512379.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 450 },
+            { id: 3, name: "Foam Bowl (16 oz)", price: 55, unit: "pack of 40", image: "https://images.pexels.com/photos/13512385/pexels-photo-13512385.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 400 },
+            { id: 4, name: "Foam Bowl (24 oz)", price: 70, unit: "pack of 40", image: "https://images.pexels.com/photos/13512390/pexels-photo-13512390.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 380 },
+            { id: 5, name: "Foam Cup (8 oz)", price: 40, unit: "pack of 100", image: "https://images.pexels.com/photos/13512394/pexels-photo-13512394.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 1000 },
+            { id: 6, name: "Foam Cup (12 oz)", price: 50, unit: "pack of 100", image: "https://images.pexels.com/photos/13512398/pexels-photo-13512398.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 900 },
+            { id: 7, name: "Plastic Spoon", price: 35, unit: "pack of 100", image: "https://images.pexels.com/photos/13512403/pexels-photo-13512403.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 2000 },
+            { id: 8, name: "Plastic Fork", price: 35, unit: "pack of 100", image: "https://images.pexels.com/photos/13512407/pexels-photo-13512407.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 2000 },
+            { id: 9, name: "Plastic Knife", price: 35, unit: "pack of 100", image: "https://images.pexels.com/photos/13512411/pexels-photo-13512411.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 2000 },
+            { id: 10, name: "Plastic Straw (Bulk)", price: 25, unit: "pack of 200", image: "https://images.pexels.com/photos/13512415/pexels-photo-13512415.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 3000 },
+            { id: 11, name: "Plastic Container (500ml)", price: 80, unit: "pack of 25", image: "https://images.pexels.com/photos/13512419/pexels-photo-13512419.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 600 },
+            { id: 12, name: "Plastic Container (1000ml)", price: 120, unit: "pack of 25", image: "https://images.pexels.com/photos/13512423/pexels-photo-13512423.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 500 },
+            { id: 13, name: "Foam Meat Tray", price: 60, unit: "pack of 50", image: "https://images.pexels.com/photos/13512427/pexels-photo-13512427.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 400 },
+            { id: 14, name: "Plastic Spork", price: 45, unit: "pack of 100", image: "https://images.pexels.com/photos/13512431/pexels-photo-13512431.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 1500 },
+            { id: 15, name: "Clear Plastic Cup (16 oz)", price: 70, unit: "pack of 50", image: "https://images.pexels.com/photos/13512435/pexels-photo-13512435.jpeg?auto=compress&cs=tinysrgb&w=300", stock: 800 }
         ];
 
-        // Load saved data from localStorage (permanent)
+        // Load from localStorage (global/permanent)
         function loadProductsFromStorage() {
-            const saved = localStorage.getItem('acers_products');
+            const saved = localStorage.getItem('azer_products');
             if (saved) {
                 products = JSON.parse(saved);
             } else {
-                localStorage.setItem('acers_products', JSON.stringify(products));
+                localStorage.setItem('azer_products', JSON.stringify(products));
             }
         }
 
         function saveProductsToStorage() {
-            localStorage.setItem('acers_products', JSON.stringify(products));
+            localStorage.setItem('azer_products', JSON.stringify(products));
         }
 
-        // Cart
         let cart = [];
+        let userInfo = { name: '', phone: '', address: '' };
 
-        // Render store products
+        function loadUserFromStorage() {
+            const saved = localStorage.getItem('azer_user');
+            if (saved) {
+                userInfo = JSON.parse(saved);
+                document.getElementById('userName').value = userInfo.name;
+                document.getElementById('userPhone').value = userInfo.phone;
+                document.getElementById('userAddress').value = userInfo.address;
+            }
+        }
+
+        function saveUserToStorage() {
+            localStorage.setItem('azer_user', JSON.stringify(userInfo));
+        }
+
         function renderStore() {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -431,7 +462,6 @@
             });
         }
 
-        // Add to cart
         window.addToCart = function(productId) {
             const qtyInput = document.getElementById(`qty-${productId}`);
             let quantity = parseInt(qtyInput.value);
@@ -487,17 +517,22 @@
             openCart();
         };
 
-        window.checkout = function() {
+        window.proceedToCheckout = function() {
             if (cart.length === 0) { showToast('Cart empty'); return; }
+            if (!userInfo.name || !userInfo.phone || !userInfo.address) {
+                showToast('Please complete your account details first');
+                openUserModal();
+                return;
+            }
             let total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            let msg = "🛍️ ACER'S ORDER\n\n";
-            cart.forEach(i => { msg += `${i.name}: ${i.quantity} x ₱${i.price}\n`; });
-            msg += `\nTOTAL: ₱${total}`;
+            let msg = `🧾 AZER FOAM ORDER\n\nCustomer: ${userInfo.name}\nPhone: ${userInfo.phone}\nAddress: ${userInfo.address}\n\n`;
+            cart.forEach(i => { msg += `${i.name}: ${i.quantity} x ₱${i.price} = ₱${i.price * i.quantity}\n`; });
+            msg += `\nTOTAL: ₱${total}\n\nThank you for ordering from Azer Foam & Plastics!`;
             window.open(`https://wa.me/639123456789?text=${encodeURIComponent(msg)}`, '_blank');
             cart = [];
             updateCartUI();
             closeCartModal();
-            showToast('Order sent via WhatsApp!');
+            showToast('Order sent! Check WhatsApp');
         };
 
         function showToast(msg) {
@@ -507,7 +542,31 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // ========== ADMIN PANEL ==========
+        // User Modal
+        function openUserModal() {
+            document.getElementById('userName').value = userInfo.name;
+            document.getElementById('userPhone').value = userInfo.phone;
+            document.getElementById('userAddress').value = userInfo.address;
+            document.getElementById('userModal').style.display = 'flex';
+        }
+        window.closeUserModal = function() {
+            document.getElementById('userModal').style.display = 'none';
+        };
+        document.getElementById('saveUserBtn').onclick = function() {
+            userInfo.name = document.getElementById('userName').value;
+            userInfo.phone = document.getElementById('userPhone').value;
+            userInfo.address = document.getElementById('userAddress').value;
+            if (!userInfo.name || !userInfo.phone || !userInfo.address) {
+                showToast('Please fill all fields');
+                return;
+            }
+            saveUserToStorage();
+            closeUserModal();
+            showToast('Account saved!');
+        };
+        document.getElementById('userBtn').onclick = openUserModal;
+
+        // Admin Panel
         function renderAdminPanel() {
             const grid = document.getElementById('productEditGrid');
             grid.innerHTML = '';
@@ -520,13 +579,13 @@
                     <input type="text" id="edit-name-${product.id}" value="${escapeHtml(product.name)}">
                     <label>Price (₱)</label>
                     <input type="number" id="edit-price-${product.id}" value="${product.price}" step="1">
-                    <label>Unit (e.g. pack of 50)</label>
+                    <label>Unit</label>
                     <input type="text" id="edit-unit-${product.id}" value="${escapeHtml(product.unit)}">
-                    <label>Stock Quantity</label>
+                    <label>Stock</label>
                     <input type="number" id="edit-stock-${product.id}" value="${product.stock}">
-                    <label>Image URL</label>
+                    <label>Image URL (must be working link)</label>
                     <textarea id="edit-image-${product.id}" rows="2">${product.image}</textarea>
-                    <button class="save-product-btn" onclick="saveProduct(${product.id})">💾 Save Changes (Permanent)</button>
+                    <button class="save-product-btn" onclick="saveProduct(${product.id})">💾 Save (Permanent)</button>
                 `;
                 grid.appendChild(card);
             });
@@ -557,27 +616,24 @@
             renderAdminPanel();
             document.getElementById('adminModal').style.display = 'block';
         }
-
         window.closeAdminPanel = function() {
             document.getElementById('adminModal').style.display = 'none';
         };
 
-        // Password protected access
         function checkAdminAccess() {
             const password = prompt("Enter admin password:");
-            if (password === "acers2024") {
+            if (password === "azer2024") {
                 openAdminPanel();
             } else if (password !== null) {
                 alert("Wrong password!");
             }
         }
 
-        // Initialize
+        // Init
         loadProductsFromStorage();
+        loadUserFromStorage();
         renderStore();
         updateCartUI();
-
-        // Admin button click
         document.getElementById('adminBtn').addEventListener('click', checkAdminAccess);
     </script>
 </body>
