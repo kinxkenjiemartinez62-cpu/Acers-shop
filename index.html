@@ -39,21 +39,34 @@
         }
         .cart-icon:hover { background: #f57c00; }
 
-        /* Hidden Admin Button (top right corner) */
-        .hidden-admin {
+        /* Admin Button - Visible but subtle */
+        .admin-btn {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.1);
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             cursor: pointer;
             z-index: 999;
             border-radius: 50%;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #ff9800;
+            border: 1px solid rgba(255,152,0,0.5);
+            box-shadow: 0 0 5px rgba(255,152,0,0.3);
+            font-weight: bold;
         }
-        .hidden-admin:hover {
-            background: rgba(255,152,0,0.3);
+        .admin-btn:hover {
+            background: rgba(255,152,0,0.85);
+            color: #0a0a0a;
+            transform: scale(1.1);
+            border-color: #ff9800;
+            box-shadow: 0 0 12px rgba(255,152,0,0.6);
         }
 
         /* Navigation */
@@ -289,13 +302,14 @@
             .header { flex-direction: column; text-align: center; gap: 10px; }
             .nav { text-align: center; }
             .hero h2 { font-size: 28px; }
+            .admin-btn { width: 38px; height: 38px; font-size: 16px; top: 10px; right: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden Admin Trigger (top right) -->
-    <div class="hidden-admin" id="hiddenAdminBtn" title="Admin Panel"></div>
+    <!-- Admin Trigger Button (semi-visible) -->
+    <div class="admin-btn" id="adminBtn" title="Admin Panel (password: acers2024)">🔧</div>
 
     <!-- Store Header -->
     <div class="header">
@@ -372,7 +386,6 @@
             if (saved) {
                 products = JSON.parse(saved);
             } else {
-                // First time - save defaults
                 localStorage.setItem('acers_products', JSON.stringify(products));
             }
         }
@@ -384,7 +397,7 @@
         // Cart
         let cart = [];
 
-        // Render store
+        // Render store products
         function renderStore() {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -409,6 +422,7 @@
         }
 
         function escapeHtml(str) {
+            if (!str) return '';
             return str.replace(/[&<>]/g, function(m) {
                 if (m === '&') return '&amp;';
                 if (m === '<') return '&lt;';
@@ -454,7 +468,7 @@
                 total += itemTotal;
                 html += `<div class="cart-item">
                             <div><strong>${escapeHtml(item.name)}</strong><br>₱${item.price} x ${item.quantity}</div>
-                            <div>₱${itemTotal}<br><button onclick="removeFromCart(${idx})" style="background:#ff4444; border:none; padding:4px 10px; border-radius:4px;">Remove</button></div>
+                            <div>₱${itemTotal}<br><button onclick="removeFromCart(${idx})" style="background:#ff4444; border:none; padding:4px 10px; border-radius:4px; cursor:pointer;">Remove</button></div>
                          </div>`;
             });
             if (cart.length === 0) html = '<p style="text-align:center;">Your cart is empty</p>';
@@ -548,7 +562,7 @@
             document.getElementById('adminModal').style.display = 'none';
         };
 
-        // Password protect
+        // Password protected access
         function checkAdminAccess() {
             const password = prompt("Enter admin password:");
             if (password === "acers2024") {
@@ -563,8 +577,8 @@
         renderStore();
         updateCartUI();
 
-        // Hidden admin button (top right corner)
-        document.getElementById('hiddenAdminBtn').addEventListener('click', checkAdminAccess);
+        // Admin button click
+        document.getElementById('adminBtn').addEventListener('click', checkAdminAccess);
     </script>
 </body>
 </html>
